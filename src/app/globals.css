@@ -98,14 +98,6 @@ ul {
   padding: 0.5rem;
 }
 
-.nav-and-search {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-  flex: 1;
-  justify-content: flex-end;
-}
-
 .search-form {
   flex: 1;
   max-width: 600px;
@@ -718,22 +710,16 @@ ul {
     display: block;
   }
   
-  .nav-and-search {
-    flex-direction: column;
-    width: 100%;
-    gap: 1rem;
-    display: none; /* Hide by default on mobile */
-  }
-  
-  .nav-and-search.open {
-    display: flex;
-  }
-
   .nav-links {
+    display: none;
     flex-direction: column;
     width: 100%;
     gap: 1rem;
     align-items: flex-start;
+  }
+  
+  .nav-links.open {
+    display: flex;
   }
   
   .nav-link {

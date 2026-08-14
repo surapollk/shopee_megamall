@@ -15,21 +15,21 @@ export default function Footer() {
         <div className="footer-col">
           <h3>หมวดหมู่ยอดนิยม</h3>
           <div className="footer-links">
-            <Link href="/category/ของใช้ในบ้านและเฟอร์นิเจอร์">ของใช้ในบ้านและเฟอร์นิเจอร์</Link>
-            <Link href="/category/คอมพิวเตอร์และแล็ปท็อป">คอมพิวเตอร์และแล็ปท็อป</Link>
-            <Link href="/category/มือถือและแก็ดเจ็ต">มือถือและแก็ดเจ็ต</Link>
-            <Link href="/category/ความงามและเครื่องสำอาง">ความงามและเครื่องสำอาง</Link>
-            <Link href="/categories">ดูหมวดหมู่ทั้งหมด →</Link>
+            <Link href="/category/ของใช้ในบ้านและเฟอร์นิเจอร์" onClick={() => window.scrollTo(0,0)}>ของใช้ในบ้านและเฟอร์นิเจอร์</Link>
+            <Link href="/category/เครื่องใช้ไฟฟ้าในบ้าน" onClick={() => window.scrollTo(0,0)}>เครื่องใช้ไฟฟ้าในบ้าน</Link>
+            <Link href="/category/มือถือและแก็ดเจ็ต" onClick={() => window.scrollTo(0,0)}>มือถือและแก็ดเจ็ต</Link>
+            <Link href="/category/ความงามและเครื่องสำอาง" onClick={() => window.scrollTo(0,0)}>ความงามและเครื่องสำอาง</Link>
+            <Link href="/categories" onClick={() => window.scrollTo(0,0)}>ดูหมวดหมู่ทั้งหมด →</Link>
           </div>
         </div>
 
         <div className="footer-col">
           <h3>เมนูลัด</h3>
           <div className="footer-links">
-            <Link href="/">หน้าแรก</Link>
-            <Link href="/best-sellers">🔥 สินค้าขายดีที่สุด</Link>
-            <Link href="#">ติดต่อเรา</Link>
-            <Link href="#">นโยบายความเป็นส่วนตัว</Link>
+            <Link href="/" onClick={() => window.scrollTo(0,0)}>หน้าแรก</Link>
+            <Link href="/best-sellers" onClick={() => window.scrollTo(0,0)}>🔥 สินค้าขายดีที่สุด</Link>
+            <Link href="#" onClick={() => window.scrollTo(0,0)}>ติดต่อเรา</Link>
+            <Link href="#" onClick={() => window.scrollTo(0,0)}>นโยบายความเป็นส่วนตัว</Link>
           </div>
         </div>
       </div>
