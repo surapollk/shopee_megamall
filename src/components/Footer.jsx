@@ -16,7 +16,8 @@ export default function Footer() {
           <h3>หมวดหมู่ยอดนิยม</h3>
           <div className="footer-links">
             <Link href="/category/ของใช้ในบ้านและเฟอร์นิเจอร์" onClick={() => window.scrollTo(0,0)}>ของใช้ในบ้านและเฟอร์นิเจอร์</Link>
-            <Link href="/category/เครื่องใช้ไฟฟ้าในบ้าน" onClick={() => window.scrollTo(0,0)}>เครื่องใช้ไฟฟ้าในบ้าน</Link>
+            <Link href="/category/คอมพิวเตอร์" onClick={() => window.scrollTo(0,0)}>คอมพิวเตอร์</Link>
+            <Link href="/category/แล็ปท็อป" onClick={() => window.scrollTo(0,0)}>แล็ปท็อป</Link>
             <Link href="/category/มือถือและแก็ดเจ็ต" onClick={() => window.scrollTo(0,0)}>มือถือและแก็ดเจ็ต</Link>
             <Link href="/category/ความงามและเครื่องสำอาง" onClick={() => window.scrollTo(0,0)}>ความงามและเครื่องสำอาง</Link>
             <Link href="/categories" onClick={() => window.scrollTo(0,0)}>ดูหมวดหมู่ทั้งหมด →</Link>

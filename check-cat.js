@@ -6,7 +6,7 @@ const turso = createClient({
 });
 
 async function run() {
-  const res = await turso.execute(`SELECT category, COUNT(*) as count FROM products GROUP BY category ORDER BY count DESC LIMIT 20`);
+  const res = await turso.execute(`SELECT category, COUNT(*) as count FROM products WHERE category LIKE '%คอม%' OR category LIKE '%แล็ป%' OR category LIKE '%แลป%' GROUP BY category`);
   console.log(res.rows);
 }
 run();
