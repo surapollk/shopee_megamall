@@ -1,5 +1,6 @@
 import { queryAll, queryGet } from '@/lib/db';
 import Link from 'next/link';
+import { getAffiliateLink } from '@/lib/affiliate';
 import Pagination from '@/components/Pagination';
 import SwipeToNavigate from '@/components/SwipeToNavigate';
 
@@ -82,7 +83,7 @@ export default async function SearchPage(props) {
         <SwipeToNavigate currentPage={page} totalPages={totalPages}>
         <div className="products-grid">
           {products.map((p) => (
-            <a href={p.product_link} target="_blank" rel="noopener noreferrer" className="product-card" key={p.id}>
+            <a href={getAffiliateLink(p.product_link)} target="_blank" rel="noopener noreferrer" className="product-card" key={p.id}>
               <div className="product-image-container">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={p.image_link} alt={p.title} className="product-image" loading="lazy" />

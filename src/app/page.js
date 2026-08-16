@@ -1,6 +1,7 @@
 import { queryAll } from '@/lib/db';
 import Link from 'next/link';
 import HeroCarousel from '@/components/HeroCarousel';
+import { getAffiliateLink } from '@/lib/affiliate';
 
 export const revalidate = 3600; // Cache for 1 hour
 
@@ -80,7 +81,7 @@ export default async function Home() {
         
         <div className="products-grid">
           {topProducts.map((p) => (
-            <a href={p.product_link} target="_blank" rel="noopener noreferrer" className="product-card" key={p.id}>
+            <a href={getAffiliateLink(p.product_link)} target="_blank" rel="noopener noreferrer" className="product-card" key={p.id}>
               <div className="product-image-container">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={p.image_link} alt={p.title} className="product-image" loading="lazy" />
