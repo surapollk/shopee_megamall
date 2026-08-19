@@ -13,18 +13,27 @@ export function getAffiliateLink(productLink) {
 
   try {
     const url = new URL(productLink);
-    
-    // Add standard UTM parameters for tracking
-    url.searchParams.set('utm_source', `an_${AFF_ID}`);
-    url.searchParams.set('utm_medium', 'affiliates');
-    url.searchParams.set('utm_campaign', 'default_campaign');
-    url.searchParams.set('aff_id', AFF_ID);
+    let originalUrl = productLink;
 
-    // Encode the modified URL
-    const encodedOriginalUrl = encodeURIComponent(url.toString());
+    // 1. ถ้าลิงก์ในฐานข้อมูลถูกครอบด้วย shope.ee/an_redir มาอยู่แล้ว ให้ดึงเอาเฉพาะลิงก์แท้ๆ (origin_link) ออกมา
+    // เพื่อป้องกันการซ้อนทับกันของ Redirect ซึ่งอาจทำให้ Tracking หลุด
+    if (url.searchParams.has('origin_link')) {
+      originalUrl = decodeURIComponent(url.searchParams.get('origin_link'));
+    }
+
+    const cleanUrl = new URL(originalUrl);
+    
+    // 2. เติมพารามิเตอร์ของ Affiliate ให้ครบถ้วนตามกฎของ Shopee
+    cleanUrl.searchParams.set('utm_source', `an_${AFF_ID}`);
+    cleanUrl.searchParams.set('utm_medium', 'affiliates');
+    cleanUrl.searchParams.set('utm_campaign', 'default_campaign');
+    cleanUrl.searchParams.set('aff_id', AFF_ID);
+
+    // 3. นำลิงก์ที่คลีนแล้วมาเข้ารหัส
+    const encodedCleanUrl = encodeURIComponent(cleanUrl.toString());
 
     // Construct the Universal Link format which forces the app to open and tracks the affiliate ID
-    const universalLink = `https://shopee.co.th/universal-link/?url=${encodedOriginalUrl}&aff_id=${AFF_ID}`;
+    const universalLink = `https://shopee.co.th/universal-link/?url=${encodedCleanUrl}&aff_id=${AFF_ID}`;
 
     return universalLink;
   } catch (error) {
