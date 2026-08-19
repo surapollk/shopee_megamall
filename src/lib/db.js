@@ -1,29 +1,38 @@
-import { createClient } from '@libsql/client';
+import postgres from 'postgres';
 
-let client = null;
+let sql = null;
 
 export function getDb() {
-  if (!client) {
-    if (!process.env.TURSO_DATABASE_URL) {
-      console.error('TURSO_DATABASE_URL is not set');
+  if (!sql) {
+    if (!process.env.SUPABASE_URL) {
+      console.error('SUPABASE_URL is not set');
     }
-    client = createClient({
-      url: process.env.TURSO_DATABASE_URL,
-      authToken: process.env.TURSO_AUTH_TOKEN,
-    });
+    sql = postgres(process.env.SUPABASE_URL, { ssl: 'require' });
   }
-  return client;
+  return sql;
 }
 
-export async function queryAll(sql, params = []) {
+export async function queryAll(queryString, params = []) {
   const db = getDb();
-  const result = await db.execute({ sql, args: params });
-  // @libsql/client returns rows as an array of objects
-  return result.rows;
+  let paramIndex = 1;
+  const pgQueryString = queryString.replace(/\?/g, () => `$${paramIndex++}`);
+  const result = await db.unsafe(pgQueryString, params);
+  return result.map(row => {
+    if (row.count !== undefined) {
+      row.count = Number(row.count);
+    }
+    return row;
+  });
 }
 
-export async function queryGet(sql, params = []) {
+export async function queryGet(queryString, params = []) {
   const db = getDb();
-  const result = await db.execute({ sql, args: params });
-  return result.rows[0];
+  let paramIndex = 1;
+  const pgQueryString = queryString.replace(/\?/g, () => `$${paramIndex++}`);
+  const result = await db.unsafe(pgQueryString, params);
+  const row = result[0];
+  if (row && row.count !== undefined) {
+    row.count = Number(row.count);
+  }
+  return row;
 }
