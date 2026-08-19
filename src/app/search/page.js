@@ -10,17 +10,28 @@ const ITEMS_PER_PAGE = 48;
 
 async function searchProducts(q, page = 1) {
   const offset = (page - 1) * ITEMS_PER_PAGE;
-  // Use LIKE with wildcards for simple search
-  const searchTerm = `%${q}%`;
+  
+  // Split query by spaces into multiple keywords
+  const keywords = q.trim().split(/\s+/).filter(k => k.length > 0);
+  if (keywords.length === 0) return [];
+  
+  // Create conditions requiring ALL keywords to be present in either title or category
+  const conditions = keywords.map(() => `(title ILIKE ? OR category ILIKE ?)`).join(' AND ');
+  
+  const params = [];
+  for (const k of keywords) {
+    params.push(`%${k}%`, `%${k}%`);
+  }
+
   const sql = `
     SELECT id, itemid, title, price, item_sold, category, image_link, product_link, shop_rating
     FROM products
-    WHERE title LIKE ?
+    WHERE ${conditions}
     ORDER BY item_sold DESC
     LIMIT ? OFFSET ?
   `;
   try {
-    return await queryAll(sql, [searchTerm, ITEMS_PER_PAGE, offset]);
+    return await queryAll(sql, [...params, ITEMS_PER_PAGE, offset]);
   } catch (e) {
     console.error(e);
     return [];
@@ -28,10 +39,19 @@ async function searchProducts(q, page = 1) {
 }
 
 async function getSearchCount(q) {
-  const searchTerm = `%${q}%`;
-  const sql = `SELECT COUNT(*) as count FROM products WHERE title LIKE ?`;
+  const keywords = q.trim().split(/\s+/).filter(k => k.length > 0);
+  if (keywords.length === 0) return 0;
+  
+  const conditions = keywords.map(() => `(title ILIKE ? OR category ILIKE ?)`).join(' AND ');
+  
+  const params = [];
+  for (const k of keywords) {
+    params.push(`%${k}%`, `%${k}%`);
+  }
+
+  const sql = `SELECT COUNT(*) as count FROM products WHERE ${conditions}`;
   try {
-    const row = await queryGet(sql, [searchTerm]);
+    const row = await queryGet(sql, params);
     return row ? row.count : 0;
   } catch (e) {
     console.error(e);
