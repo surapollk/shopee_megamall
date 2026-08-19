@@ -29,13 +29,8 @@ export function getAffiliateLink(productLink) {
     cleanUrl.searchParams.set('utm_campaign', 'default_campaign');
     cleanUrl.searchParams.set('aff_id', AFF_ID);
 
-    // 3. นำลิงก์ที่คลีนแล้วมาเข้ารหัส
-    const encodedCleanUrl = encodeURIComponent(cleanUrl.toString());
-
-    // Construct the Universal Link format which forces the app to open and tracks the affiliate ID
-    const universalLink = `https://shopee.co.th/universal-link/?url=${encodedCleanUrl}&aff_id=${AFF_ID}`;
-
-    return universalLink;
+    // 3. ส่งกลับเป็นลิงก์โดยตรง (Direct Link) Shopee Mobile Web จะทำการเปิด App ให้เองอย่างถูกต้อง
+    return cleanUrl.toString();
   } catch (error) {
     console.error('Error generating affiliate link:', error);
     // Fallback to original link if parsing fails
